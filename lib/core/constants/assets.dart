@@ -1,4 +1,11 @@
 sealed class AppAssets {
+  static const List<String> bottomNavtitles = [
+    'home',
+    'meals',
+    'scan code',
+    'packages',
+    'more'
+  ];
   //svg
   static const String curvedRec = "assets/svg/curvedrec.svg";
   static const String nibblesLogo = "assets/svg/logo.svg";

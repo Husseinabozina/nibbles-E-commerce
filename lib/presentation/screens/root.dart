@@ -7,8 +7,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nibbles_ecommerce/configs/configs.dart';
 
 import 'package:nibbles_ecommerce/presentation/screens.dart';
+import 'package:stylish_bottom_bar/helpers/bottom_bar.dart';
 
 import '../../application/application.dart';
+import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
 class RootScreen extends StatefulWidget {
   const RootScreen({super.key});
@@ -38,19 +40,15 @@ class _RootScreenState extends State<RootScreen>
     const MoreScreen(),
   ];
 
-  final List<MyBottomBarItem> bottomBarItems = List.generate(
-    AppAssets.navbarIcons.length,
-    (index) => MyBottomBarItem(
-      inActiveItem: SvgPicture.asset(
-        AppAssets.navbarIcons[index],
-        colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
-      ),
-      activeItem: SvgPicture.asset(
-        AppAssets.navbarIcons[index],
-        colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
-      ),
-    ),
-  );
+  final List<BottomBarItem> bottomBarItems = List.generate(
+      AppAssets.navbarIcons.length,
+      (index) => BottomBarItem(
+          backgroundColor: AppColors.deepTeal,
+          icon: SvgPicture.asset(
+            AppAssets.navbarIcons[index],
+            colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+          ),
+          title: Text(AppAssets.bottomNavtitles[index])));
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +58,7 @@ class _RootScreenState extends State<RootScreen>
       listener: (context, state) {
         if (state is NavigationPageChangedState) {
           // Handle page change logic here
+
           _pageController.animateToPage(
             state.pageIndex,
             duration: const Duration(milliseconds: 1),
@@ -76,16 +75,36 @@ class _RootScreenState extends State<RootScreen>
         ),
         extendBody: true,
         bottomNavigationBar: (bottomBarPages.length <= maxCount)
-            ? MyAnimatedNotchBottomBar(
-                pageController: _pageController,
-                showBlurBottomBar: false,
-                color: AppColors.antiqueRuby,
-                showShadow: true,
-                showLabel: false,
-                bottomBarItems: bottomBarItems,
+            ? StylishBottomBar(
+                currentIndex: context.read<NavigationCubit>().currentIndex,
                 onTap: (index) {
+                  setState(() {});
                   context.read<NavigationCubit>().navigateToPage(index);
-                })
+                },
+                items: bottomBarItems,
+                option: DotBarOptions(
+                  dotStyle: DotStyle.tile,
+                  gradient: const LinearGradient(
+                    colors: [
+                      Colors.deepPurple,
+                      Colors.pink,
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                ),
+              )
+
+//  MyAnimatedNotchBottomBar(
+//                 pageController: _pageController,
+//                 showBlurBottomBar: false,
+//                 color: AppColors.antiqueRuby,
+//                 showShadow: true,
+//                 showLabel: false,
+//                 bottomBarItems: bottomBarItems,
+//                 onTap: (index) {
+//                   context.read<NavigationCubit>().navigateToPage(index);
+//                 })
             : null,
       ),
     );
