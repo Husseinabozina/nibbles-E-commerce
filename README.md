@@ -160,9 +160,6 @@ These dependencies collectively contribute to the functionality, design, and use
 - PlaceOrderCubit.
 - GetOrdersCubit.
 
-## Download App
-<a href="https://github.com/mo7amedaliEbaid/nibbles-ecommerce-food/releases/download/v1.0.0/nibbles.apk"><img src="https://playerzon.com/asset/download.png" width="150"></img></a>
-
 ## Screens
 
 - AboutScreen
